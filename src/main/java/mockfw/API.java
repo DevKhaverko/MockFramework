@@ -5,6 +5,7 @@ import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -60,7 +61,15 @@ public class API {
                     new ArrayList<>()
             ));
         }
-        return (T) enhancer.create();
+        Constructor<?> constructor = classToMock.getDeclaredConstructors()[0];
+        if (constructor == null) {
+            System.out.println("There is no accessible constructor");
+        }
+
+        Class<?>[] argTypes = constructor.getParameterTypes();
+        Object[] args = new Object[argTypes.length];
+
+        return (T) enhancer.create(argTypes, args);
     }
 
     public static <T> OngoingStubbing<T> when(T methodCall) {

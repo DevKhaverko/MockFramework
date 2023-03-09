@@ -1,12 +1,9 @@
-package mockfw;
-
-public class User{
+public class UserWithoutArgs {
     String name = "fsdfds";
 
-    public User(String name, NestedObj nestedObj) {
+    public UserWithoutArgs() {
 
     }
-
     public String getName() {
         return name;
     }
