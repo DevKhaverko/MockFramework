@@ -4,8 +4,8 @@ package mockfw;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 
-
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -84,5 +84,19 @@ public class API {
             }
         }
         return new OngoingStubbing<>(methodCall);
+    }
+
+    public static void initMocks(Object obj){
+        for (Field field : obj.getClass().getDeclaredFields()) {
+            if (field.isAnnotationPresent(MockAnnotation.class)) {
+                field.setAccessible(true);
+                try {
+                    field.set(obj, API.mock(field.getType()));
+                }
+                catch (IllegalAccessException e) {
+                }
+                break;
+            }
+        }
     }
 }

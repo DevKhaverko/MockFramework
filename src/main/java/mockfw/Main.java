@@ -1,11 +1,5 @@
 package mockfw;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
-
-import static java.lang.Thread.getAllStackTraces;
-
 public class Main {
     public static void main(String[] args) {
         User user = API.mock(User.class);
