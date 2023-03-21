@@ -15,4 +15,8 @@ public class UserWithArgs {
     public String getThrowable(String a, String b) throws IllegalArgumentException {
         return "regfdg";
     }
+
+    public static String getStaticThrowable(String a, String b) throws IllegalArgumentException {
+        return "regfdg";
+    }
 }

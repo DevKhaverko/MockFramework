@@ -15,4 +15,11 @@ public class User{
         return "regfdg";
     }
 
+    public static String staticReturnString() {
+        return "static";
+    }
+
+    public static String staticAnyString(String string) {
+        return string;
+    }
 }

@@ -99,4 +99,8 @@ public class API {
             }
         }
     }
+
+    public static <T> MockStatic createStaticMock(Class<T> tClass) {
+        return new MockStatic(tClass);
+    }
 }
