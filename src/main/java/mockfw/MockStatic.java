@@ -60,6 +60,9 @@ public class MockStatic implements AutoCloseable{
         }
 
     }
+    public static Object getMockRef(int id) {
+        return mockRefs.get(id);
+    }
 
     @Override
     public void close(){
