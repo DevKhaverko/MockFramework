@@ -12,4 +12,8 @@ public class UserWithoutArgs {
         return "regfdg";
     }
 
+    public static String staticReturnString() {
+        return "static";
+    }
+
 }

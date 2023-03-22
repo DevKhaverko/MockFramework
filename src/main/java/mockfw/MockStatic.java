@@ -21,7 +21,8 @@ public class MockStatic implements AutoCloseable{
         ClassPool classPool = ClassPool.getDefault();
         try {
             ctClass = classPool.get(staticClass.getName());
-            if (ctClass.isFrozen()) ctClass.defrost();
+            if (ctClass.isFrozen())
+                ctClass.defrost();
             CtClass staticMockHelper = classPool.makeClass(
                     "MockStatic" + UUID.randomUUID().toString().replace("-", ""));
             String helperName = staticMockHelper.getName();
@@ -47,9 +48,9 @@ public class MockStatic implements AutoCloseable{
                 saveList.add(CtNewMethod.copy(method, method.getName(), ctClass, null));
                 String body = "((" + helperName + ")mockfw.MockStatic.getMockRef(" + lastId + "))."
                         + method.getName() + "($$);";
-                if (!method.getReturnType().getName().equals("void")) {
+                if (!method.getReturnType().getName().equals("void"))
                     body = "return ($r)" + body;
-                }
+
                 method.setBody("{" + body + "}");
             }
             lastId++;
@@ -87,7 +88,6 @@ public class MockStatic implements AutoCloseable{
         try {
             HotSwapAgent.redefine(staticClass, ctClass);
         } catch (NotFoundException | IOException | CannotCompileException e) {
-            System.out.println("fucccck");
             e.printStackTrace();
         }
         mockRefs.remove(currentMock);
