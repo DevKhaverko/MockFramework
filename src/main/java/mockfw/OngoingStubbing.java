@@ -26,7 +26,7 @@ public class OngoingStubbing<T> implements Stubbing<T>{
                 }
             }
         }
-        return null;
+        return this;
     }
 
     @Override
@@ -45,6 +45,6 @@ public class OngoingStubbing<T> implements Stubbing<T>{
                 }
             }
         }
-        return null;
+        return this;
     }
 }

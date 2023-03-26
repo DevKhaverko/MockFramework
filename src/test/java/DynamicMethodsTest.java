@@ -6,6 +6,7 @@ public class DynamicMethodsTest {
     @Test
     public void checkCreatingMockFromClassWithConstructorWithoutArgs() {
         UserWithoutArgs userWithoutArgs = API.mock(UserWithoutArgs.class);
+        assert userWithoutArgs.getName() == null;
         API.when(userWithoutArgs.getName()).thenReturn("WOW");
         assert userWithoutArgs.getName().equals("WOW");
     }
@@ -16,6 +17,12 @@ public class DynamicMethodsTest {
         assert userWithArgs.getName().equals("HEY");
     }
 
+    @Test
+    public void checkOnlyWhen() {
+        UserWithArgs userWithArgs = API.mock(UserWithArgs.class);
+        API.when(userWithArgs.getName());
+        assert userWithArgs.getName() == null;
+    }
     @Test
     public void checkWhenWithArgsAndThenReturn() {
         UserWithArgs userWithArgs = API.mock(UserWithArgs.class);
