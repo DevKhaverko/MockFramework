@@ -14,7 +14,7 @@ public class User{
         return "static";
     }
 
-    public static String staticAnyString(String string) {
+    public static String staticAnyString(String string){
         return string;
     }
 }

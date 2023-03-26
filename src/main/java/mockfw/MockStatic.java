@@ -59,7 +59,6 @@ public class MockStatic implements AutoCloseable{
             exception.printStackTrace();
             System.exit(1);
         }
-
     }
     public static Object getMockRef(int id) {
         return mockRefs.get(id);

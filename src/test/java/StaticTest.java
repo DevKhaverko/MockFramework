@@ -1,41 +1,42 @@
 import mockfw.API;
-import mockfw.MockAnnotation;
 import mockfw.MockStatic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class StaticTest {
+import java.util.EmptyStackException;
 
-    @MockAnnotation
-    private User user;
+public class StaticTest {
 
     @Test
     public void testStaticMock(){
         assert User.staticReturnString().equals("static");
 
-        MockStatic mockStatic = API.createStaticMock(User.class);
-        API.when(User.staticReturnString()).thenReturn("bb");
-        assert User.staticReturnString().equals("bb");
+        try (MockStatic mockStatic = API.createStaticMock(User.class)){
+            API.when(User.staticReturnString()).thenReturn("bb");
+            assert User.staticReturnString().equals("bb");
 
-        API.when(User.staticAnyString("aa")).thenThrow(new ArithmeticException());
-        Assertions.assertThrows(ArithmeticException.class, () -> {
-            User.staticAnyString("aa");
-        });
+            API.when(User.staticAnyString("aa")).thenThrow(new ArithmeticException());
+            Assertions.assertThrows(ArithmeticException.class, () -> User.staticAnyString("aa"));
+
+            API.when(User.staticAnyString("bb")).thenThrow(new EmptyStackException());
+            Assertions.assertThrows(EmptyStackException.class, () -> User.staticAnyString("bb"));
+        }
+        assert User.staticReturnString().equals("static");
     }
 
     @Test
     public void testThrowable(){
-        MockStatic mockStatic = API.createStaticMock(UserWithArgs.class);
-        API.when(UserWithArgs.getStaticThrowable("first", "second")).thenThrow(new ArithmeticException());
-
-        Assertions.assertThrows(ArithmeticException.class, () -> {
-            UserWithArgs.getStaticThrowable("first", "second");
-        });
+        assert UserWithoutArgs.staticReturnString().equals("static");
+        try (MockStatic mockStatic = API.createStaticMock(UserWithoutArgs.class)){
+            API.when(UserWithoutArgs.staticReturnString()).thenThrow(new ArithmeticException());
+            Assertions.assertThrows(ArithmeticException.class, UserWithoutArgs::staticReturnString);
+        }
+        assert UserWithoutArgs.staticReturnString().equals("static");
     }
 
     @Test
     public void testNotWorking(){
-        API.when(UserWithoutArgs.staticReturnString()).thenReturn("bb");
-        assert UserWithoutArgs.staticReturnString().equals("static");
+        API.when(User.staticReturnString()).thenReturn("bb");
+        assert User.staticReturnString().equals("static");
     }
 }
